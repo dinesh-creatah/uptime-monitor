@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.availability.tests.WebsiteAvailabilityTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 11.69 s <<< FAILURE! -- in com.availability.tests.WebsiteAvailabilityTest
+com.availability.tests.WebsiteAvailabilityTest.checkWebsiteAvailability -- Time elapsed: 11.65 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: â�Œ WEBSITE DOWN after retries: https://atpsgroup.com/dahshs | Last status: 404 ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.availability.tests.WebsiteAvailabilityTest.checkWebsiteAvailability(WebsiteAvailabilityTest.java:73)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
