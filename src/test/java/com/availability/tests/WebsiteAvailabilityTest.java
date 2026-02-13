@@ -81,24 +81,30 @@ public class WebsiteAvailabilityTest {
 		// 🚨 CLEAN ALERT SECTION
 		if (!failedUrls.isEmpty()) {
 
-			System.out.println("\n=====================================");
-			System.out.println("🚨 WEBSITE DOWN ALERT");
-			System.out.println("=====================================\n");
+		    System.out.println("\n=====================================");
+		    System.out.println("🚨 WEBSITE DOWN ALERT");
+		    System.out.println("=====================================\n");
 
-			for (String failed : failedUrls) {
-				System.out.println("❌ " + failed);
-			}
+		    StringBuilder failureMessage = new StringBuilder();
+		    failureMessage.append("DOWN ALERT:\n");
 
-			System.out.println("\nChecked at: " + LocalDateTime.now());
-			System.out.println("=====================================\n");
+		    for (String failed : failedUrls) {
+		        String line = "DOWN | URL: " + failed;
+		        System.out.println("❌ " + line);
+		        failureMessage.append(line).append("\n");
+		    }
 
-			Assertions.fail("One or more websites are DOWN.");
+		    System.out.println("\nChecked at: " + LocalDateTime.now());
+		    System.out.println("=====================================\n");
+
+		    Assertions.fail(failureMessage.toString());
+
 		} else {
 
-			System.out.println("\n=====================================");
-			System.out.println("✅ ALL WEBSITES ARE UP");
-			System.out.println("Checked at: " + LocalDateTime.now());
-			System.out.println("=====================================\n");
+		    System.out.println("\n=====================================");
+		    System.out.println("✅ ALL WEBSITES ARE UP");
+		    System.out.println("Checked at: " + LocalDateTime.now());
+		    System.out.println("=====================================\n");
 		}
 	}
 }
