@@ -89,8 +89,6 @@ public class WebsiteAvailabilityTest {
             StringBuilder failureMessage = new StringBuilder();
             StringBuilder fileContent = new StringBuilder();
 
-            fileContent.append("WEBSITE DOWN ALERT\n\n");
-
             for (String failed : failedUrls) {
                 String line = "DOWN | " + failed;
                 failureMessage.append(line).append("\n");
