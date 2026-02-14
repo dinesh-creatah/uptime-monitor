@@ -9,6 +9,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -80,29 +83,29 @@ public class WebsiteAvailabilityTest {
         workbook.close();
         fis.close();
 
-        // 🚨 DYNAMIC ALERT SECTION (JENKINS-FRIENDLY)
+        // 🚨 FINAL JENKINS-SAFE ALERT SECTION
         if (!failedUrls.isEmpty()) {
 
             StringBuilder failureMessage = new StringBuilder();
-            StringBuilder failedUrlEnv = new StringBuilder();
-            StringBuilder failedStatusEnv = new StringBuilder();
+            StringBuilder fileContent = new StringBuilder();
+
+            fileContent.append("WEBSITE DOWN ALERT\n\n");
 
             for (String failed : failedUrls) {
-                failureMessage.append("DOWN | ").append(failed).append("\n");
-
-                // Split URL & status safely
-                String[] parts = failed.split("\\| Status:");
-                failedUrlEnv.append(parts[0].replace("DOWN |", "").trim()).append(", ");
-
-                if (parts.length > 1) {
-                    failedStatusEnv.append(parts[1].trim()).append(", ");
-                }
+                String line = "DOWN | " + failed;
+                failureMessage.append(line).append("\n");
+                fileContent.append(line).append("\n");
             }
 
-            // 🔥 PASS DATA TO JENKINS
-            System.setProperty("FAILED_URLS", failedUrlEnv.toString());
-            System.setProperty("FAILED_STATUS_CODES", failedStatusEnv.toString());
-            System.setProperty("FAILURE_TIME", LocalDateTime.now().toString());
+            fileContent.append("\nChecked at: ").append(LocalDateTime.now());
+
+            // ✅ Write to workspace file for Jenkins Email-ext
+            Files.write(
+                    Paths.get("failure-details.txt"),
+                    fileContent.toString().getBytes(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            );
 
             Assertions.fail(failureMessage.toString());
 
